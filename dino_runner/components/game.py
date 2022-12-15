@@ -1,13 +1,10 @@
 import pygame
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.components.obstacles.bird import Bird_one, Bird_Two
-from dino_runner.components.obstacles.cactus import LargeCactus, SmallCactus
+from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.utils.constants import (
     BG,
-    BIRD,
     ICON,
-    LARGE_CACTUS,
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
     SMALL_CACTUS,
@@ -31,7 +28,7 @@ class Game:
         self.obstacle_manager = ObstacleManager()
     
     def new_method(self):
-        return (SmallCactus(SMALL_CACTUS) and LargeCactus(LARGE_CACTUS)) and (Bird_one(BIRD) and Bird_Two(BIRD))
+        return Cactus(SMALL_CACTUS)
 
     def run(self):
         # Game loop: events - update - draw
