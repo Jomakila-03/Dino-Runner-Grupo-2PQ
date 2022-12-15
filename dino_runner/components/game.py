@@ -86,12 +86,16 @@ class Game:
         if self.death_count == 0:
             #poner un mensaje de bienvenida
             font = pygame.font.Font(FONT_STYLE, 30)
-            message = font.render("Press any key to start", True, (0, 0, 0))
+            message = font.render("Press any key to start", True, (255, 255, 255), (255, 0, 0))
             message_rect = message.get_rect()
             message_rect.center = (half_screen_width, half_screen_height)
             self.screen.blit(message, message_rect)
         else:
-            print(self.death_count)
+            font = pygame.font.Font(FONT_STYLE, 30)
+            message = font.render(f"Game over, death count: {self.death_count} Press any key to restart", True, (255, 255, 255), (255, 0, 0))
+            message_rect = message.get_rect()
+            message_rect.center = (half_screen_width, half_screen_height)
+            self.screen.blit(message, message_rect)
             # poner imagen como icono
         
         self.screen.blit(DINO_START, (half_screen_width -40, half_screen_height -120))
@@ -106,5 +110,11 @@ class Game:
                 self.executing = False
             elif event.type == pygame.KEYDOWN:
                 self.run()
+                
+                
+                
+
+
+
 
 

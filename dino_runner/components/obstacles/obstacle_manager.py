@@ -1,4 +1,5 @@
 from random import randint
+
 import pygame
 from dino_runner.components.obstacles.bird import Bird
 from dino_runner.components.obstacles.cactus import Cactus
@@ -32,7 +33,7 @@ class ObstacleManager:
                 pygame.time.delay(1000)
                 game.playing = False
                 game.death_count += 1
-
+   
     def draw(self, screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)
