@@ -5,6 +5,9 @@ import os
 TITLE = "Chrome Dino Runner"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
+HALF_SCREEN_HEIGHT = SCREEN_HEIGHT // 2
+HALF_SCREEN_WIGTH = SCREEN_WIDTH // 2
+INITIAL_GAME_VELOCITY = 20
 FPS = 30
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
@@ -71,6 +74,14 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 DINO_START = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoStart.png"))
 
+DINO_DEAD = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDead.png"))
+
 DEFAULT_TYPE = "default"
 
 FONT_STYLE = "freesansbold.ttf" 
+SHIELD_TYPE = "shield"
+HAMMER_TYPE = "hammer"
+pygame.mixer.init()
+SOUND_JUMP = pygame.mixer.Sound(os.path.join(IMG_DIR,"sound/mario-bros-jump.mp3"))
+SOUND_DEAD = pygame.mixer.Sound(os.path.join(IMG_DIR,"sound/Jump.wav"))
+SOUND_POWER = pygame.mixer.Sound(os.path.join(IMG_DIR,"sound/power.wav"))
