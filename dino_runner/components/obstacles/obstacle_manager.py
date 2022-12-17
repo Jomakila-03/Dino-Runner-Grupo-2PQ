@@ -3,7 +3,8 @@ from random import randint
 import pygame
 from dino_runner.components.obstacles.bird import Bird
 from dino_runner.components.obstacles.cactus import Cactus
-from dino_runner.utils.constants import  BIRD, LARGE_CACTUS, SMALL_CACTUS
+from dino_runner.components.obstacles.heart import Heart
+from dino_runner.utils.constants import  BIRD, HEART, LARGE_CACTUS, SMALL_CACTUS
 
 
 class ObstacleManager:
@@ -14,12 +15,14 @@ class ObstacleManager:
         self.obstacles = []
 
     def obstacle(self):
-        object_random = randint(0, 2)
+        object_random = randint(0, 3)
 
         if object_random == 0:
             self.obstacles.append(Cactus(SMALL_CACTUS, self.SMALL_CACTUS_Y_POS))
         elif object_random == 1:
             self.obstacles.append(Cactus(LARGE_CACTUS, self.LARGE_CACTUS_Y_POS))
+        elif object_random == 2:
+            self.obstacles.append(Heart(HEART))
         else:
             self.obstacles.append(Bird(BIRD))
 

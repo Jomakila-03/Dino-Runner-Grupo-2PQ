@@ -9,7 +9,7 @@ HAMMER_ACTION = "hamming"
 JUMP_IMG = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
 RUN_IMG = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
 DUCK_IMG = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
-HAMM_IMG = {DEFAULT_TYPE: DUCKING_HAMMER, SHIELD_TYPE: DUCKING_HAMMER}
+HAMM_IMG = {DEFAULT_TYPE: DUCKING_HAMMER, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_HAMMER}
 
 pygame.mixer.init()
 
@@ -28,6 +28,7 @@ class Dinosaur(Sprite):
         self.action = RUNNING_ACTION
         self.has_power_up = False
         self.power_up_time_up = 0
+        self.life = 3 
     
     def reset_rect(self, y_pos=None):
         self.rect = self.image.get_rect()

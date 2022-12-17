@@ -1,8 +1,6 @@
 import pygame
 from dino_runner.components.cloud import Cloud
 from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.components.obstacles.heart import Heart
-from dino_runner.components.obstacles.obstacle import Obstacle
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 from dino_runner.components.score import Score
@@ -38,9 +36,8 @@ class Game:
         self.power_up_manager = PowerUpManager()
         self.score = Score()
         self.cloud = Cloud()
-        self.heart = Heart()
         self.death_count = 0
-        self.lives = 3
+
         self.executing = False
 
     def execute(self):
@@ -78,20 +75,18 @@ class Game:
         self.obstacle_manager.update(self.game_speed, self.player, self.on_death)
         self.power_up_manager.update(self.game_speed, self.score.points, self.player)
         self.score.update(self)
-        self.heart.update(self)
         self.cloud.update(self.game_speed)
 
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill((204, 153, 255))
         self.draw_background()
+        self.cloud.draw(self.screen)
         self.player.draw(self.screen)
         self.player.draw_active_power_up(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.power_up_manager.draw(self.screen)
         self.score.draw(self.screen)
-        self.heart.draw(self.screen)
-        self.cloud.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
@@ -108,6 +103,13 @@ class Game:
         self.screen.fill((204, 153, 255))
         if self.death_count == 0:
             message_draw("Press any key to start", self.screen)
+            if self.player.life < 1:
+                message_draw(
+                    f"You have {self.player.life} lives",
+                    self.screen,
+                    font_size = 15,
+                    pos_y_center=HALF_SCREEN_HEIGHT +90,
+                )
         else:
             message_draw(
             "GAME_OVER", self.screen, font_size=50, pos_y_center=HALF_SCREEN_HEIGHT -150
@@ -127,15 +129,13 @@ class Game:
                 pos_y_center=HALF_SCREEN_HEIGHT +60,
             )
         
-        if self.lives == 3:
+        if self.player.life == 3:
             message_draw(
-                f"You have {self.lives} lives",
+                f"You have {self.player.life} lives",
                 self.screen,
                 font_size = 15,
                 pos_y_center=HALF_SCREEN_HEIGHT +90,
                 )
-
-       
 
         self.screen.blit(DINO_START, (HALF_SCREEN_WIGTH -40, HALF_SCREEN_HEIGHT-120))
         pygame.display.update()
@@ -147,6 +147,11 @@ class Game:
                 self.executing = False
             elif event.type == pygame.KEYDOWN:
                 self.run()
+                if self.player.life<1:
+                    self.player.life = 2
+                    self.death_count = 0
+                    self.score.points = 0
+                    self.game_speed = INITIAL_GAME_VELOCITY
     
     def on_death(self):
         has_shield = self.player.type == SHIELD_TYPE
@@ -154,15 +159,12 @@ class Game:
             self.player.on_dino_death()
             self.draw()
             self.death_count += 1
+            self.player.life -= 1
   
             self.playing = False
         
         return not has_shield
 
-    def lives(self):
-        for self.live in range(1, self.lives==3):
-            if self.player.live == 1:
-                self.playing = False
    
 
 
